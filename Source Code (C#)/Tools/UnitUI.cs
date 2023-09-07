@@ -13,10 +13,6 @@ public class UnitUI : NetworkBehaviour
         transform.LookAt(Camera.main.transform);
         transform.Rotate(0, 180, 0);
     }
-    private void Update()
-    {
-
-    }
 
     public override void FixedUpdateNetwork()
     {

@@ -33,20 +33,5 @@ public class WeaponChanger : NetworkBehaviour
             other.gameObject.GetComponent<PlayerController>().FindAbilities();
             other.gameObject.GetComponent<PlayerController>().SetupWeaponUI();
         }
-        // if (other.gameObject.GetComponent<UnitStats>().unitType == "Player")
-        // {
-        //     switch (element)
-        //     {
-        //         case "Fire":
-        //             other.gameObject.GetComponent<PlayerController>().element = "Fire";
-        //             break;
-        //         case "Radiation":
-        //             other.gameObject.GetComponent<PlayerController>().element = "Radiation";
-        //             break;
-        //         case "Electricity":
-        //             other.gameObject.GetComponent<PlayerController>().element = "Electricity";
-        //             break;
-        //     }
-        // }
     }
 }
