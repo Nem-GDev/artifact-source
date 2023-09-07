@@ -89,7 +89,7 @@ public class AICasterUnit : NetworkBehaviour
         //! 1st; Update current target, path, distance etc. (if no target, dont continue)
         if (UpdatePathingTarget() == false)
             return;
-        //Debug.Log("Updated path");
+
         //! 2nd; Update ability cds, stats etc., order by next cast desirability
         UpdateAbilityPool();
 
@@ -102,10 +102,8 @@ public class AICasterUnit : NetworkBehaviour
     private void CastNextAbility()
     {
         animator.SetTrigger("attack");
-        //Debug.Log(abilities[nextAbilityIndex].currentcd);
         abilities[nextAbilityIndex].currentcd = abilities[nextAbilityIndex].cd;
         notOnCDIndices.Remove(nextAbilityIndex);
-        //Debug.Log(abilities[nextAbilityIndex].abilityName);
         caster.CastAbility(abilities[nextAbilityIndex], currentTarget.transform.position);
     }
     private void RotateTowardsTarget()
@@ -120,7 +118,6 @@ public class AICasterUnit : NetworkBehaviour
         for (int i = 0; i < abilities.Count; i++)
         {
             //? reduce cooldowns
-            //Debug.Log(abilities[i].abilityName + " | cd: " + abilities[i].currentcd);
             abilities[i].currentcd -= aiPollRate;
             //? add abilities not on cooldown to list if not on list already
             if (abilities[i].currentcd < 0 && !notOnCDIndices.Contains(i))
@@ -162,7 +159,6 @@ public class AICasterUnit : NetworkBehaviour
         }
         currentDistanceToTarget = dist;
         agent.SetDestination(currentTarget.transform.position);
-        //Debug.Log("set dest");
         return true;
     }
     private void OnDrawGizmos()

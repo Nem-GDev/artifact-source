@@ -21,7 +21,6 @@ public class AbilityCaster : NetworkBehaviour
     };
     public UnitStats stats;
 
-    //GameObject currentMouseTarget;
     Vector3 mouse;
     AudioSource tmpSource;
     public AudioClip defClip;
@@ -40,19 +39,9 @@ public class AbilityCaster : NetworkBehaviour
             targetTypeOpponent = "Enemy";
         }
         stats = GetComponent<UnitStats>();
-
-        //Debug.Log(targetTypeOpponent);
-        // onHits.Add(AbilityDataSet.ONHIT_aoeIgnite, 0);
-        // onHits.Add(AbilityDataSet.ONHIT_crit, 0);
-        // onHits.Add(AbilityDataSet.ONHIT_explode, 0);
-        // onHits.Add(AbilityDataSet.ONHIT_lifesteal, 0);
-        // onHits.Add(AbilityDataSet.ONHIT_poison, 0);
-        // onHits.Add(AbilityDataSet.ONHIT_slow, 0);
-        // onHits.Add(AbilityDataSet.ONHIT_stun, 0);
     }
     public bool CastAbility(AbilityTemplate ability, Vector3 target)
     {
-        //Debug.Log("CastAbility called");
         if (!isCasting)
         {
             if (ability.logicType == AbilityDataSet.LOGIC_INSTANT_BOX)
@@ -115,9 +104,7 @@ public class AbilityCaster : NetworkBehaviour
 
     private void CastInstantBox(AbilityTemplate ability)
     {
-        //Debug.Log("CastInstantAOE called");
         //! All logic is ran only on server, except for vfx and networked param changes
-        //ability.currentcd = ability.cd;
         string vfxName = ability.abilityName + "_Casted";
         Vector3 boxCenterOffset = transform.Find(vfxName).GetComponent<OverlapConfig>().centerOffset.position;
         Vector3 boxSize = transform.Find(vfxName).GetComponent<OverlapConfig>().GetBoxConfig();
@@ -133,18 +120,6 @@ public class AbilityCaster : NetworkBehaviour
     }
     private void CastInstantSphere(AbilityTemplate ability)
     {
-        // string vfxName = ability.abilityName + "_Casted";
-        // Vector3 sphereCenterOffset = transform.Find(vfxName).GetComponent<OverlapConfig>().centerOffset.position;
-        // float radius = transform.Find(vfxName).GetComponent<OverlapConfig>().GetSphereConfig();
-
-        // RPC_PlayVFX(vfxName);
-        // Collider[] hitTargets = Physics.OverlapSphere(sphereCenterOffset, radius, LayerMask.GetMask(targetTypeOpponent));
-        // foreach (Collider c in hitTargets)
-        // {
-        //     //Debug.Log("Hit a player collider");
-        //     c.gameObject.GetComponent<UnitStats>().TakeDamage(ability.damage);
-        // }
-
         //? find prefab corresponding to ability
         int index = orderedAbilityNames.IndexOf(ability.abilityName);
         NetworkPrefabRef abi = orderedAbilityPrefabs[index];
@@ -155,7 +130,6 @@ public class AbilityCaster : NetworkBehaviour
         Quaternion rot = transform.rotation;
         rot *= Quaternion.Euler(-90, 0, 0);
 
-        //obj.gameObject.GetComponent<NetworkScale>().scale *= (ability.radiusAOE*2);
         // ? spawn effect
         void AdjustAOE(NetworkRunner runner, NetworkObject obj)
         { obj.transform.Find(vfxName).GetComponent<NetworkScale>().scale *= (ability.radiusAOE * 2); }
@@ -168,7 +142,6 @@ public class AbilityCaster : NetworkBehaviour
         {
             //Debug.Log("Hit a player collider");
             c.gameObject.GetComponent<UnitStats>().TakeDamage(ability.damage, stats, onHits);
-            //c.gameObject.GetComponent<UnitStats>().TakeSlow(50, 3);
         }
 
     }
@@ -184,7 +157,6 @@ public class AbilityCaster : NetworkBehaviour
         Quaternion rot = transform.rotation;
         rot *= Quaternion.Euler(-90, 0, 0);
 
-        //obj.gameObject.GetComponent<NetworkScale>().scale *= (ability.radiusAOE*2);
         // ? spawn effect
         void AdjustAOE(NetworkRunner runner, NetworkObject obj)
         { obj.transform.Find(vfxName).GetComponent<NetworkScale>().scale *= (ability.radiusAOE * 2); }
@@ -214,7 +186,6 @@ public class AbilityCaster : NetworkBehaviour
         Quaternion rot = transform.rotation;
         rot *= Quaternion.Euler(-90, 0, 0);
 
-        //obj.gameObject.GetComponent<NetworkScale>().scale *= (ability.radiusAOE*2);
         // ? spawn effect
         void AdjustAOE(NetworkRunner runner, NetworkObject obj)
         { obj.transform.Find(vfxName).GetComponent<NetworkScale>().scale *= (ability.radiusAOE * 2); }
@@ -237,8 +208,6 @@ public class AbilityCaster : NetworkBehaviour
 
     private void CastProjectile(AbilityTemplate ability, Vector3 target)
     {
-        //Debug.Log("here");
-
         //? find prefab corresponding to projectile
         int index = orderedAbilityNames.IndexOf(ability.abilityName);
         NetworkPrefabRef proj = orderedAbilityPrefabs[index];
@@ -296,7 +265,6 @@ public class AbilityCaster : NetworkBehaviour
         Vector3 dir = new Vector3(target.x - transform.position.x, 0f - transform.position.y,
                                  target.z - transform.position.z).normalized;
         Vector3 source = transform.Find("ProjectileAOESource").GetComponent<OverlapConfig>().centerOffset.position;
-        //float radius = transform.Find(vfxName).GetComponent<OverlapConfig>().GetSphereConfig();
 
         if (!Runner.IsServer)
             return;
@@ -318,7 +286,6 @@ public class AbilityCaster : NetworkBehaviour
         Vector3 dir = new Vector3(target.x - transform.position.x, 0f - transform.position.y,
                                  target.z - transform.position.z).normalized;
         Vector3 source = transform.Find("ProjectileAOESource").GetComponent<OverlapConfig>().centerOffset.position;
-        //float radius = transform.Find(vfxName).GetComponent<OverlapConfig>().GetSphereConfig();
 
         if (!Runner.IsServer)
             return;
@@ -441,16 +408,8 @@ public class AbilityCaster : NetworkBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.cyan;
-        //Gizmos.DrawWireSphere(transform.position + new Vector3(0, 3, 0), 0.3f);
-        //Gizmos.DrawWireSphere(mouse, 2f);
-        // if (currentMouseTarget != null)
-        //     Gizmos.DrawWireSphere(currentMouseTarget.transform.position, 0.5f);
-        // else
-        //     Debug.Log("No g");
-
     }
-
-
+    
     //! Cast projectile notes
     //? Consists of spawning a corresponding projectile and giving it specific force in direction
     //? Projectile prefab will have a projectile script to handle collision
@@ -459,6 +418,4 @@ public class AbilityCaster : NetworkBehaviour
     //? or can rpc call to spawn on each client but only apply collision on server
     //? in order to avoid using resources.load which is very slow, we can preload projectiles on prefab ref.s
     //* We can setup a list/dictionary etc for referencing in editor
-
-
 }

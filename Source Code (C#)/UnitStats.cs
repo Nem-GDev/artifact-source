@@ -118,11 +118,6 @@ public class UnitStats : NetworkBehaviour
         CheckDeath();
     }
 
-    // private void ApplyOnHits(UnitStats source, Dictionary<string, int> onHits)
-    // {
-
-    // }
-
     public override void FixedUpdateNetwork()
     {
         base.FixedUpdateNetwork();

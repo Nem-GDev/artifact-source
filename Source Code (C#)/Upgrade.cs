@@ -47,10 +47,7 @@ class Upgrade
 
     public static Upgrade GetRandom()
     {
-        // testing
-        //if (rar <=20)
         Upgrade r = new Upgrade("", typeList[Random.Range(0, typeList.Length)], 0f);
-        //r.rarity = "Common";
 
         int rar = Random.Range(1, 101);
         if (rar <= 15)

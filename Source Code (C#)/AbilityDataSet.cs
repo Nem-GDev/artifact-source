@@ -368,13 +368,4 @@ public class AbilityDataSet : MonoBehaviour
         radiusAOE = 6f,
         punchThrough = 1
     };
-
-    // void Awake()
-    // {
-    //     //! Cleave VFX
-    //     Cleave.VFX_Casted = Resources.Load("VFX/" + ABILITY_Cleave + "_Casted") as GameObject;
-
-    //     //! MagicArrow VFX 
-    //     MagicArrow.VFX_Projectile = Resources.Load("VFX/" + ABILITY_MagicArrow + "_Projectile") as GameObject;
-    // }
 }

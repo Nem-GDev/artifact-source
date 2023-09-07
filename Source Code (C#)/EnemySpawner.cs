@@ -37,7 +37,6 @@ public class EnemySpawner : NetworkBehaviour
         if (!startTimer.Expired(Runner))
             return;
 
-        // score = Time.realtimeSinceStartup*100f;
         score += Runner.DeltaTime * 100f;
         diffTimerReduc = score / 100 / 60 * spawnSpeedupPerMin;
         spawnTypeBias = (int)Mathf.Round(score / 100 / 30 * thresholdSpeedUpPer30Second);
@@ -77,7 +76,7 @@ public class EnemySpawner : NetworkBehaviour
             }
 
             //! Legacy random spawn
-            // //? Currently scaling hp 1%/sec
+            // //? Scaling hp 1%/sec
             // void AdjustStats(NetworkRunner runner, NetworkObject obj)
             // {
             //     obj.gameObject.GetComponent<UnitStats>().maxHealth *= 1 + (score / 100) / 100;
@@ -86,7 +85,6 @@ public class EnemySpawner : NetworkBehaviour
             // Runner.Spawn(enemyPrefabs[UnityEngine.Random.Range((int)0, (int)enemyPrefabs.Count)],
             //                 spawnPoints[UnityEngine.Random.Range((int)0, (int)spawnPoints.Count)].position,
             //                 Quaternion.identity, inputAuthority: null, AdjustStats, predictionKey: null);
-
 
             //singleSpawn = true;
         }

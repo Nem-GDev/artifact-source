@@ -95,7 +95,6 @@ public class ProjectileLogic : NetworkBehaviour
         }
         else if (isChain)
         {
-            //Debug.Log("in chain");
             //! Chain logic
             if (LayerMask.LayerToName(other.gameObject.layer) == targetType)
             {
@@ -110,7 +109,6 @@ public class ProjectileLogic : NetworkBehaviour
         else if (isDOT)
         {
             //! DOT logic
-            //Debug.Log("in dot");
             if (LayerMask.LayerToName(other.gameObject.layer) == targetType)
             {
                 //Debug.Log("HIT!");
@@ -122,7 +120,6 @@ public class ProjectileLogic : NetworkBehaviour
         }
         else
         {
-            //Debug.Log("in basic");
             //! Basic logic
             if (LayerMask.LayerToName(other.gameObject.layer) == targetType)
             {

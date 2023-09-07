@@ -45,14 +45,6 @@ public class PlayerController : NetworkBehaviour
     {
         base.Spawned();
 
-        // if (enemySpawner==null)
-        //     Debug.LogError("EnemySpawner is null on player controller");
-        //if (!Runner.IsServer)
-        //    GetComponent<NetworkTransform>().InterpolationDataSource = InterpolationDataSources.NoInterpolation;
-        //if (Object.HasInputAuthority)
-        //    GetComponent<NetworkTransform>().InterpolationDataSource = InterpolationDataSources.NoInterpolation;
-        //Debug.Log("Player spawned called");
-        //gameObject.GetComponent<UnitStats>().Init(1500, "Player");
         caster = GetComponent<AbilityCaster>();
         enemySpawner = GameObject.Find("EnemySpawner").GetComponent<EnemySpawner>();
         aC = GetComponent<AudioSource>();
@@ -78,6 +70,8 @@ public class PlayerController : NetworkBehaviour
         abilities.Add(AbilityDataSet.GetAbilityByName(AbilityDataSet.ABILITY_MolotovBasicThrow));
         abilities.Add(AbilityDataSet.GetAbilityByName(AbilityDataSet.ABILITY_MolotovDOT));
         abilities.Add(AbilityDataSet.GetAbilityByName(AbilityDataSet.ABILITY_MolotovRoll));
+
+        // Partially deprecated code
         switch (weapon)
         {
             case "Bow":
@@ -97,8 +91,6 @@ public class PlayerController : NetworkBehaviour
                 break;
         }
         FindAbilities();
-        //if(Runner.IsServer)
-        //    Runner.Spawn(spawnVFX, transform.position);
     }
     private void SetupCamera()
     {
@@ -117,7 +109,6 @@ public class PlayerController : NetworkBehaviour
         fol.m_RollDamping = 1.5f;
         fol.m_PitchDamping = 1.5f;
         fol.m_AngularDamping = 1.5f;
-        //vcam.gameObject.transform.eulerAngles = new Vector3(45,0,0);
     }
 
     public override void FixedUpdateNetwork()
@@ -136,7 +127,6 @@ public class PlayerController : NetworkBehaviour
         }
         if (!stats.isAlive)
         {
-            //playerMesh.SetActive(false);
             gameObject.SetActive(false);
             restartButton.SetActive(true);
             return;
@@ -145,7 +135,6 @@ public class PlayerController : NetworkBehaviour
         for (int i = 0; i < abilities.Count; i++)
         {
             abilities[i].currentcd -= Runner.DeltaTime;
-            //Debug.Log(abilities[0].currentcd);
         }
 
         CheckForUpgrade();
@@ -196,24 +185,6 @@ public class PlayerController : NetworkBehaviour
                 if (caster.CastAbility(abilities[indexAb2], new Vector3(input.aim.x, transform.position.y, input.aim.z)))
                     abilities[indexAb2].currentcd = abilities[indexAb2].cd;
             }
-
-            // if (upgrades.Count >= 2)
-            // {
-            //     if (input.upgrade1)
-            //     {
-            //         Debug.Log("Up1 picked");
-            //         RPC_Upgrade(upgrades.Peek().rarity, upgrades.Peek().type, upgrades.Peek().value);
-            //         upgrades.Dequeue();
-            //         upgrades.Dequeue();
-            //     }
-            //     else if (input.upgrade2)
-            //     {
-            //         Debug.Log("Up2 picked");
-            //         upgrades.Dequeue();
-            //         RPC_Upgrade(upgrades.Peek().rarity, upgrades.Peek().type, upgrades.Peek().value);
-            //         upgrades.Dequeue();
-            //     }
-            // }
 
             if (currentUp1 != null)
             {
@@ -282,10 +253,6 @@ public class PlayerController : NetworkBehaviour
         if (indexAb2 == -1)
             Debug.LogError($"Ability2 not found for weapon {weapon} on this player.");
     }
-    public void LateUpdate()
-    {
-        //transform.rotation = Quaternion.identity;
-    }
 
     private void UpdateUICD()
     {
@@ -324,11 +291,6 @@ public class PlayerController : NetworkBehaviour
         //? Once an upgrade is chosen, info is sent to be applied by server(in input section)
         //? UI counter setup
         SetupUpgradeUI();
-
-
-        //! Implement random upgrade generation
-        // upgrades.Enqueue(new Upgrade("Rare", Upgrade.TYPES_maxHP, 500f));
-        // upgrades.Enqueue(new Upgrade("Rare", Upgrade.TYPES_maxHP, 500f));
         aC.PlayOneShot(upN, 1f);
 
         Upgrade up1 = Upgrade.GetRandom();
@@ -341,7 +303,6 @@ public class PlayerController : NetworkBehaviour
         {
             currentUp1 = up1;
             currentUp2 = up2;
-
 
             up1Text.text = "1: " + currentUp1.type + "";
             up2Text.text = "2: " + currentUp2.type + "";
@@ -487,11 +448,6 @@ public class PlayerController : NetworkBehaviour
     public void RPC_Upgrade(string rarity, string type, float value)
     {
         //! Implement application of all upgrade types
-        //Debug.Log($"Rpc executing: {type} , {rarity}");
-        // if (type == Upgrade.TYPES_maxHP)
-        // {
-        //     stats.AddMaxHealth(value);
-        // }
         switch (type)
         {
             case Upgrade.TYPES_maxHP:
@@ -566,7 +522,5 @@ public class PlayerController : NetworkBehaviour
     private void SetupUI()
     {
         //? Setup ability UI as well as score/misc.
-
-
     }
 }

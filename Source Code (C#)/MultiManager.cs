@@ -45,11 +45,6 @@ public class MultiManager : MonoBehaviour, INetworkRunnerCallbacks
     NetworkInputData inputData = new();
     public void OnInput(NetworkRunner runner, NetworkInput input)
     {
-        // //var inputData = new NetworkInputData();
-        // if (Input.GetKey(KeyCode.Space))
-        //     moveData.shoot = true;
-        // else
-        //     moveData.shoot = false;
         input.Set(inputData);
         inputData = default;
     }
@@ -136,8 +131,6 @@ public class MultiManager : MonoBehaviour, INetworkRunnerCallbacks
         aSource.volume = 0.6f;
         aSource.Play();
 
-        //sp = spawnGrid[UnityEngine.Random.Range(0, spawnGrid.Count)];
-
         if (spawnGrid == null)
             Debug.LogWarning("SpawnGrid is not assigned - Multimanager");
 
@@ -169,8 +162,6 @@ public class MultiManager : MonoBehaviour, INetworkRunnerCallbacks
 
             if (Input.GetKey(KeyCode.Mouse0))
                 inputData.primary = true;
-            // if (Input.GetKeyUp(KeyCode.Mouse0))
-            //     inputData.primary = false;
 
             if (Input.GetKey(KeyCode.Q))
                 inputData.ability1 = true;
